@@ -44,6 +44,7 @@ dType.constructor.field = function (options) {
     field.fieldType= options.fieldType || 'string';
     field.fieldGroup= options.fieldGroup || 'defaultGroup';
     field.showInAdd= _.isBoolean(options.showInAdd) ? options.showInAdd: true;
+    field.required= _.isBoolean(options.required) ? options.required: true;
 
     field.defaultValue = options.defaultValue || dType.core.getFieldType(options.fieldType).defaultValue;
 

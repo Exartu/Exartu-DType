@@ -8,6 +8,7 @@ dType.validator={
             if(type.customValidation){
                 return type.customValidation(doc);
             }
+            
             return isValidObj(type, doc);
         })
     },
@@ -96,7 +97,10 @@ var isValidProperty= function(type, obj, propName, isUpdate){
     result=isService(type, propName);
     if (result){
         console.log('validating service: ' + propName);
-        return result.isValid(obj[propName], result.setting)
+        var res= result.isValid(obj[propName], result.setting);
+        if (res){
+          console.log('invalid service: ' + propName);
+        }
     }
     result=isRelation(type, propName);
     if (result){
@@ -143,6 +147,7 @@ var isValidField= function(field, value){
     var error={}
     var aux= dType.core.getFieldType(field.fieldType).validate(value, field, error);
     if(!aux){
+      
         console.log('value: ' + value + ' is not valid for field ' + field.name+':')
         console.log(error.message)
     }
@@ -150,6 +155,7 @@ var isValidField= function(field, value){
 }
 var isValidRelation= function(visibility, value){
     if (!checkCardinality(value, visibility.cardinality)){
+      
         console.log('invalid card')
         return false;
     }
@@ -173,18 +179,24 @@ var isValidRelation= function(visibility, value){
 // check if value adjust to card
 var checkCardinality = function (value, card) {
     if (!value) {
-        //the cardinality allows no value?
+      
+
+      //the cardinality allows no value?
         return card.min <= 0;
     }
     if (typeof value == typeof[]) {
         if (card.max == 1) {
-            return false;
+          
+
+          return false;
         } else {
             return value.length <= card.max && value.length >= card.min;
         }
     } else {
         if (card.max > 1) {
-            return false;
+          
+
+          return false;
         }
     }
     return true;
@@ -216,7 +228,9 @@ var checkType = function (obj, typeName, collection) {
             _id: 1
         });
         if (!exists){
-            console.log(obj+'not Exists')
+          
+
+          console.log(obj+'not Exists')
         }
         return exists != undefined;
     }
