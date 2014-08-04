@@ -28,7 +28,8 @@ var isValidObj= function(type, obj, isUpdate){
         //check if the obj has every required key
         var required=getRequiredkeys(type);
         if (! isContained(required, _.keys(obj))){
-            console.log('the obj is not valid, some required keys missing for type '+type.name)
+            console.log('the obj is not valid, some required keys missing for type '+type.name);
+            console.log(_.difference(required, _.keys(obj)))
             return false;
         }
         completeObj(type, obj);
