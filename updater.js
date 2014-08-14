@@ -59,21 +59,6 @@ dType.updater={
           if (oldObj[myVisibility.name] !=  obj[myVisibility.name]){
             if (oppositeVisibility){
               updateOtherSide(doc, obj, myVisibility, oppositeVisibility)
-
-              //update old
-
-              update=  getUpdateOld(doc, oppositeVisibility, myVisibility.target);
-              targetId= getTargetId(oldObj, myVisibility);
-
-              if (targetId){
-                collection.direct.update()({ _id: targetId }, update,function(err, result){
-                  if (err){
-                    throw err
-                  }else{
-                    console.log(result);
-                  }
-                })
-              }
             }
           }
         })
