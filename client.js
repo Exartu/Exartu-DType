@@ -251,7 +251,10 @@ dType.buildAddModel= function(addModel){
 var fieldInstance= function(field){
     var item= _.clone(field);
 
-    reactiveProp(item, 'value', field.defaultValue);
+    var fieldType = _FieldTypes[field.fieldType];
+    var defaultValue = fieldType.clientDefaultValue ? fieldType.clientDefaultValue(field) :  field.defaultValue;
+  
+    reactiveProp(item, 'value', defaultValue);
     reactiveProp(item, 'error', '');
     reactiveProp(item, 'isValid', true);
 
