@@ -24,7 +24,6 @@ dType.validator = {
 // if the key represents a child objType, then it validates that child
 var isValidObj = function (type, obj, isUpdate, doc) {
   if (!isUpdate) {
-    debugger;
     //check if the obj has every required key
     var required = getRequiredkeys(type);
     if (!isContained(required, _.keys(obj))) {
