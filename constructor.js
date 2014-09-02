@@ -121,7 +121,8 @@ dType.constructor.relation = function (options) {
 
     extendVisiblity(relation.visibilityOn1, relation.obj2);
 
-    extendVisiblity(relation.visibilityOn2, relation.obj1);
+    if (relation.visibilityOn2)
+      extendVisiblity(relation.visibilityOn2, relation.obj1);
 
     dType.core.createRelation(relation);
     return relation;

@@ -154,9 +154,15 @@ _.extend(dType.core,{
                         {
                             obj2: type.name
                         }, {
-                            visibilityOn2 : {
-                                $exists: true
-                            }
+                            $and:[{
+                              visibilityOn2 : {
+                                  $exists: true
+                              }
+                            },{
+                                visibilityOn2: {
+                                  $ne: null
+                                }
+                            }]
                         }
                     ]
                 },
@@ -181,7 +187,7 @@ _.extend(dType.core,{
             if(rel.obj1==type.name){
                 visibilities.push(rel.visibilityOn1);
 
-            }else if(rel.obj2==type.name){
+            }else if(rel.obj2==type.name && rel.visibilityOn2){
                 visibilities.push(rel.visibilityOn2);
             }
         });

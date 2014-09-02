@@ -124,7 +124,6 @@ var isValidProperty = function (type, obj, propName, isUpdate) {
     console.log('validating subType: ' + propName);
     return isValidObj(result, obj[propName], isUpdate, obj);
   }
-  console.log(propName + ' is nothing')
 
   return true;
 }
