@@ -1,35 +1,35 @@
 Package.describe({
-    summary: 'dynamic types'
+    summary: 'dynamic types',
+    name: 'dtype'
 });
 
 var both = ["client", "server"];
 
-Package.on_use(function(api){
+Package.onUse(function(api){
     api.use([
-        "collection-hooks",
-        "underscore",
-
+        "matb33:collection-hooks",
+        "underscore"
     ], both);
 
     api.use([
         'deps',
     ], 'client');
+    api.export("dType", both);
 
-    api.add_files('common.js', ['server']);
-    api.add_files('util.js', ['server']);
-    api.add_files('validator.js', ['server']);
-    api.add_files('updater.js', ['server']);
-    api.add_files('core.js', both);
-    api.add_files('constructor.js', ['server']);
-    api.add_files('basicFieldTypesDefinition.js', both);
-    api.add_files('client.js', ['client']);
-    api.export("dType")
+    api.addFiles('common.js', ['server']);
+    api.addFiles('util.js', ['server']);
+    api.addFiles('validator.js', ['server']);
+    api.addFiles('updater.js', ['server']);
+    api.addFiles('core.js', both);
+    api.addFiles('constructor.js', ['server']);
+    api.addFiles('basicFieldTypesDefinition.js', both);
+    api.addFiles('client.js', ['client']);
 });
 
-Package.on_test(function(api){
-    api.use(['dType', 'tinytest', 'test-helpers']);
-    api.add_files('test/test.js', ['server']);
-    api.add_files('test/fieldTest.js', ['server']);
-    api.add_files('test/serviceTest.js', ['server']);
-    api.add_files('test/relation.js', ['server']);
+Package.onTest(function(api){
+    api.use(['dtype', 'tinytest', 'test-helpers']);
+    api.addFiles('test/test.js', ['server']);
+    api.addFiles('test/fieldTest.js', ['server']);
+    api.addFiles('test/serviceTest.js', ['server']);
+    api.addFiles('test/relation.js', ['server']);
 })
