@@ -1,6 +1,10 @@
 if (!dType) {
   dType = {};
 }
+dType.log = dType._debug ? function () {
+  console.log.apply(console,arguments);
+} : function () {};
+
 dType.validator = {
   validateInsert: function (userId, doc) {
     var types = dType.core.getObjBaseTypes(doc);
@@ -28,7 +32,7 @@ var isValidObj = function (type, obj, isUpdate, doc) {
     var required = getRequiredkeys(type);
     if (!isContained(required, _.keys(obj))) {
       console.log('the obj is not valid, some required keys missing for type ' + type.name);
-      console.log(_.difference(required, _.keys(obj)))
+      console.log(_.difference(required, _.keys(obj)));
       return false;
     }
     completeObj(type, obj, doc);
@@ -89,7 +93,7 @@ var completeObj = function (type, obj, doc) {
 // and then it proceeds as isValidObj but not checking the completeness
 var isValidObjUpdate = function (baseType, modifier) {
   var formattedModifier = getFormatedModifier(modifier);
-  console.log(formattedModifier)
+  dType.log(formattedModifier)
   return _.every(_.keys(formattedModifier), function (key) {
     return isValidProperty(baseType, formattedModifier, key, true);
   })
@@ -99,29 +103,29 @@ var isValidProperty = function (type, obj, propName, isUpdate) {
   var result;
   result = isField(type, propName);
   if (result) {
-    console.log('validating field: ' + propName);
+    dType.log('validating field: ' + propName);
     return isValidField(result, obj[propName]);
   }
   result = isService(type, propName);
   if (result) {
-    console.log('validating service: ' + propName);
+    dType.log('validating service: ' + propName);
     var res = result.isValid(obj[propName], result.setting);
     if (res) {
-      console.log('invalid service: ' + propName);
+      console.err('invalid service: ' + propName);
     }
   }
   result = isRelation(type, propName);
   if (result) {
-    console.log('validating relation: ' + propName);
+    dType.log('validating relation: ' + propName);
     var v = isValidRelation(result, obj[propName])
     if (!v) {
-      console.log('invalid rel')
+      console.err('invalid rel');
     }
     return v;
   }
   result = isSubType(type, propName);
   if (result) {
-    console.log('validating subType: ' + propName);
+    dType.log('validating subType: ' + propName);
     return isValidObj(result, obj[propName], isUpdate, obj);
   }
 
@@ -141,7 +145,6 @@ var isService = function (type, propName) {
 }
 var isRelation = function (type, propName) {
   var rels = dType.core.getRelationsVisivilityOnType(type);
-//    console.dir(rels);
   return _.findWhere(rels, { name: propName });
 }
 var isSubType = function (type, propName) {
@@ -155,14 +158,14 @@ var isValidField = function (field, value) {
   var error = {}
   var aux = dType.core.getFieldType(field.fieldType).validate(value, field, error);
   if (!aux) {
-    console.log('value: ' + value + ' is not valid for field ' + field.name + ':')
-    console.log(error.message)
+    console.err('value: ' + value + ' is not valid for field ' + field.name + ':');
+    console.err(error.message)
   }
   return aux;
 }
 var isValidRelation = function (visibility, value) {
   if (!checkCardinality(value, visibility.cardinality)) {
-    console.log('invalid card')
+    console.err('invalid card');
     return false;
   }
   if (value) {
@@ -219,12 +222,6 @@ var checkType = function (obj, typeName, collection) {
   if (_.isObject(obj))
     return obj.objNameArray && _.isArray(obj.objNameArray) && (obj.objNameArray.indexOf(typeName) >= 0);
   else {
-//        console.log('collection')
-//        console.dir(collection.find().fetch());
-//        console.log('obj')
-//        console.dir(obj);
-//        console.log('objNameArray')
-//        console.dir(typeName);
     var exists = collection.findOne({
       _id: obj,
       objNameArray: typeName
@@ -232,8 +229,6 @@ var checkType = function (obj, typeName, collection) {
       _id: 1
     });
     if (!exists) {
-
-
       console.log(obj + 'not Exists')
     }
     return exists != undefined;
