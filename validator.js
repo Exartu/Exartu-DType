@@ -111,7 +111,7 @@ var isValidProperty = function (type, obj, propName, isUpdate) {
     dType.log('validating service: ' + propName);
     var res = result.isValid(obj[propName], result.setting);
     if (res) {
-      console.err('invalid service: ' + propName);
+      console.error('invalid service: ' + propName);
     }
   }
   result = isRelation(type, propName);
@@ -119,7 +119,7 @@ var isValidProperty = function (type, obj, propName, isUpdate) {
     dType.log('validating relation: ' + propName);
     var v = isValidRelation(result, obj[propName])
     if (!v) {
-      console.err('invalid rel');
+      console.error('invalid rel');
     }
     return v;
   }
@@ -158,14 +158,14 @@ var isValidField = function (field, value) {
   var error = {}
   var aux = dType.core.getFieldType(field.fieldType).validate(value, field, error);
   if (!aux) {
-    console.err('value: ' + value + ' is not valid for field ' + field.name + ':');
-    console.err(error.message)
+    console.error('value: ' + value + ' is not valid for field ' + field.name + ':');
+    console.error(error.message)
   }
   return aux;
 }
 var isValidRelation = function (visibility, value) {
   if (!checkCardinality(value, visibility.cardinality)) {
-    console.err('invalid card');
+    console.error('invalid card');
     return false;
   }
   if (value) {
