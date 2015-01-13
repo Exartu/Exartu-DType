@@ -10,7 +10,7 @@ var both = ["client", "server"];
 Package.onUse(function(api){
     api.versionsFrom('METEOR@0.9.2');
     api.use([
-        "matb33:collection-hooks",
+        "matb33:collection-hooks@0.7.7",
         "underscore"
     ], both);
 
@@ -32,7 +32,7 @@ Package.onUse(function(api){
 
 Package.onTest(function(api){
     api.versionsFrom('METEOR@0.9.2');
-    api.use(['dtype', 'tinytest', 'test-helpers']);
+    api.use(['aida:dtype', 'tinytest', 'test-helpers']);
     api.addFiles('test/test.js', ['server']);
     api.addFiles('test/fieldTest.js', ['server']);
     api.addFiles('test/serviceTest.js', ['server']);
