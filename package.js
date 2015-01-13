@@ -1,11 +1,14 @@
 Package.describe({
+    name: 'aida:dtype',
     summary: 'dynamic types',
-    name: 'dtype'
+    version: "0.1.0",
+    git: "https://github.com/Exartu/Exartu-DType.git"
 });
 
 var both = ["client", "server"];
 
 Package.onUse(function(api){
+    api.versionsFrom('METEOR@0.9.2');
     api.use([
         "matb33:collection-hooks",
         "underscore"
@@ -14,6 +17,7 @@ Package.onUse(function(api){
     api.use([
         'deps',
     ], 'client');
+    
     api.export("dType", both);
 
     api.addFiles('common.js', ['server']);
@@ -27,6 +31,7 @@ Package.onUse(function(api){
 });
 
 Package.onTest(function(api){
+    api.versionsFrom('METEOR@0.9.2');
     api.use(['dtype', 'tinytest', 'test-helpers']);
     api.addFiles('test/test.js', ['server']);
     api.addFiles('test/fieldTest.js', ['server']);
