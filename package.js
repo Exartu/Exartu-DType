@@ -1,7 +1,7 @@
 Package.describe({
     name: 'aida:dtype',
     summary: 'dynamic types',
-    version: "0.1.0",
+    version: "0.1.1",
     git: "https://github.com/Exartu/Exartu-DType.git"
 });
 
